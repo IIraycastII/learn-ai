@@ -1,0 +1,11 @@
+Dataset creation:
+generate 100 linearly spaced x-values between 10 and 200, then compute noisy y-values following the linear pattern y = 1.5x + 5 + noise.
+
+Data range extraction:
+correctly capture the min and max for both x and y — useful for scaling, visualization, or normalization.
+
+Grid search over slopes:
+try slopes (m) between -2 and 2 to find the one that minimizes the average residual error — though this metric isn’t standard for line fitting.
+
+Visualization:
+neatly plot both the dataset and the best-fit line.

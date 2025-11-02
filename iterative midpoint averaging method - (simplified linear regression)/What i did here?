@@ -1,0 +1,45 @@
+Step-by-step breakdown
+
+Data generation
+
+y = 1.5 * x + 5 + np.random.normal(0, 20, size=100)
+
+
+You create a noisy line with a true slope of 1.5.
+
+Iterative midpoint process
+
+while len(points_mid) > 1:
+    midpoints = []
+    for i in range(len(points_mid) - 1):
+        mid_x = (points_mid[i][0] + points_mid[i + 1][0]) / 2
+        mid_y = (points_mid[i][1] + points_mid[i + 1][1]) / 2
+        midpoints.append([mid_x, mid_y])
+    points_mid = np.array(midpoints)
+
+
+Each iteration replaces every pair of consecutive points with their midpoint.
+
+After enough iterations, everything collapses into one single final point, which is essentially the average of all points, just computed recursively instead of directly.
+
+So mathematically, your final_point is equivalent to:
+
+final_point = [mean(x), mean(y)]
+
+
+Line derivation
+
+slope = final_point[1] / final_point[0]
+
+
+This defines a line that passes through the origin (0,0) and the average point (mean(x), mean(y)).
+
+So the slope you get is approximately:
+
+𝑚=mean(𝑦)mean(𝑥)
+m=mean(x)mean(y)
+	​
+
+
+Error calculation
+You predict y_pred = slope * x (no intercept), compute residuals, and display their range and average.

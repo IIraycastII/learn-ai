@@ -1,0 +1,47 @@
+1. Data simulation
+
+You generate 100 random x and y values between 80 and 100.
+They represent two input features for a simple neuron.
+
+2. Weighted sum (the neuron’s input)
+
+You compute:
+
+𝑧=𝑤1𝑥+𝑤2𝑦+𝑏
+z=w1​x+w2y+b
+
+Here both weights w1 and w2 are set to 1, and bias b = 0, so:
+
+𝑧=𝑥+𝑦z=x+y
+
+This gives a combined activation input for each data pair.
+
+3. Scaling (normalization)
+
+The raw z values can be large (e.g., around 160–200 since x and y ≈ 80–100).
+To make the sigmoid curve meaningful, you normalize all z values into the range [-10, 10], which is the region where the sigmoid changes most sharply:
+
+𝑧scaled=(𝑧−𝑧min⁡)(𝑧max⁡−𝑧min)×20−10z
+scaled=(zmax−zmin)(z−zmin)×20−10
+
+This step ensures your sigmoid plot shows the classic “S” shape.
+
+4. Applying the sigmoid function
+
+You then compute:
+
+𝜎(𝑧)=11+𝑒−𝑧
+σ(z)=1+e−z1
+
+for each scaled z value.
+This converts each input into a value between 0 and 1, which is the neuron's activation output — the probability-like interpretation.
+
+5. Plot 1 – Sigmoid curve
+
+You sort the scaled z values and plot σ(z) vs. z, giving you the classic S-shaped sigmoid curve.
+
+The red dashed line at 0.5 represents the decision threshold — the point where the neuron output switches from "off" (0) to "on" (1).
+
+6. Plot 2 – Original data visualization
+
+You also display a scatter plot of the original (x, y) points — purely for reference, showing the random data that fed into the neuron’s weighted sum.

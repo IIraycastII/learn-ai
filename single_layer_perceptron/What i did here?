@@ -1,0 +1,75 @@
+1. Dataset Setup
+
+You start with:
+
+Study Hours	Attendance	Results
+2	60	fail
+4	75	pass
+1	40	fail
+5	80	pass
+
+You convert “pass” → 1 and “fail” → 0, so the neural model can process numbers.
+
+2. Model Initialization
+
+You define:
+
+weights_1 = 0.1 → for study hours
+
+weights_2 = -0.3 → for attendance
+
+bias = -0.2
+
+learning_rate = 0.1
+
+This model is a single-layer perceptron:
+𝑧=(𝑤1×𝑥1)+(𝑤2×𝑥2)+𝑏
+z=(w1×x1)+(w2×x2)+b
+
+And the output rule is:
+
+if 𝑧≥0.3⇒predict 1(pass),else 0(fail)
+if z≥0.3⇒predict 1 (pass), else 0 (fail)
+3. Data Normalization
+
+Before training, you normalize both input features between 0 and 1:
+𝑥′=𝑥−min(𝑥)max(𝑥)−min(𝑥)
+x′=max(x)−min(x)x−min(x)
+	​
+
+
+This ensures features are in the same scale — a key step for gradient-based learning.
+
+4. Learning Loop
+
+You run the perceptron for multiple iterations (input_times).
+
+For each training example:
+
+Compute the weighted sum:
+
+𝑧=𝑤1𝑥1+𝑤2𝑥2+𝑏
+z=w1x1+w2x2+b
+
+Apply the threshold to get the predicted output (0 or 1).
+
+Compare it to the actual output (input_3).
+
+If prediction is wrong, update the weights:
+
+𝑤𝑖=𝑤𝑖+𝜂×(𝑦−𝑦^)×𝑥𝑖
+wi=wi+η×(y−y^​)×xi
+𝑏=𝑏+𝜂×(𝑦−𝑦^)
+b=b+η×(y−y^)
+
+where:
+η = learning rate
+y = actual result
+y^= predicted result
+
+This update rule is the core perceptron learning algorithm.
+
+5. Accuracy Tracking
+
+For every correct prediction, you increase correct_count.
+At the end, you print how many predictions were correct across all iterations.

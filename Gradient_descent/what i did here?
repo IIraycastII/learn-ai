@@ -1,0 +1,119 @@
+Step-by-step breakdown
+1. Dataset
+dataset = numpy.array([[10, 30, 20, 43, 23],
+                       [23, 43, 55, 65, 23]])
+
+
+First row → x values (inputs)
+
+Second row → y values (actual outputs)
+
+You are trying to make the model learn a line:
+
+𝑦=𝑚⋅𝑥+𝑐
+y=m⋅x+c
+2. Initial setup
+m = 2.0
+c = 4.0
+learning_rate = 0.0001
+
+
+You started with some initial guesses for slope and intercept (m=2, c=4)
+and a learning rate (which controls how big your gradient descent steps are).
+
+Also created lists m_list and c_list to store all the updated values of m and c during training — so you can later plot the progress.
+
+3. Predicted values and initial loss
+for i in range(len(dataset[0])):
+    y.append(m * dataset[0][i] + c)
+    loss = ((y[i] - dataset[1][i]) ** 2) / len(dataset[1])
+
+
+You calculated:
+
+The predicted output for each x → m*x + c
+
+The loss (mean squared error) for each point
+
+You printed this just to check your initial error.
+
+So this part is basically:
+👉 “What does my line predict, and how far is it from the real data?”
+
+4. Compute gradient components
+difference_m.append(dataset[1][i] - y[i])
+addition_m.append((dataset[0][i] * difference_m[i]))
+
+
+Here, you’re calculating:
+
+How much each prediction differs from the actual (difference_m)
+
+The contribution of each input x to that difference (addition_m)
+
+Later you summed them up:
+
+addition_c = sum(difference_m)
+sum_addition_m = sum(addition_m)
+
+
+Those sums represent total gradient influence for m and c.
+
+5. Ask user how many iterations
+input_1 = int(input("how many iterations: "))
+
+
+You let the user decide how long gradient descent should run — how many times you’ll update m and c.
+
+6. Perform Gradient Descent
+for i in range(input_1):
+    gradient_m = float(-2 * (sum_addition_m)/len(addition_m))
+    gradient_c = float(-2 * (addition_c)/len(addition_m))
+
+
+You computed gradients — i.e., how the loss changes with respect to m and c.
+The -2 comes from the derivative of the Mean Squared Error (MSE) formula.
+
+Then you updated parameters:
+
+m = m - learning_rate * gradient_m
+c = c - learning_rate * gradient_c
+
+
+Each iteration slightly moves m and c in the direction that reduces the loss.
+
+You also appended new values to the lists for later plotting.
+
+7. After training
+
+You printed all values:
+
+print(m_list)
+print(c_list)
+
+
+So you can see how the slope and intercept changed during the learning process.
+
+8. Visualization
+plt.plot(m_list, c_list, marker='o')
+plt.title("Gradient Descent Progress (m vs c)")
+plt.xlabel("m values")
+plt.ylabel("c values")
+plt.grid(True)
+plt.show()
+
+
+This plots the path that gradient descent took — how m and c were updated step by step as the algorithm tried to minimize error.
+
+In simpler terms:
+Step	What you did	Why
+1	Created x, y dataset	Training data for line fitting
+2	Set m, c, learning rate	Start point for optimization
+3	Predicted outputs	Estimate y using y = mx + c
+4	Calculated loss	Measure how wrong predictions are
+5	Found gradients	Direction to move m, c to reduce loss
+6	Updated m and c	Adjust line closer to best fit
+7	Repeated multiple times	Gradually minimize loss
+8	Plotted progress	Visualize how parameters evolved
+
+How m and c converge toward optimal values

@@ -1,0 +1,101 @@
+Step 1: Dataset Generation
+def generate_random_dataset():
+    return np.array([
+        [random.choice(["sunny", "rainy"]) for _ in range(6)],
+        [random.choice(["cool", "hot"]) for _ in range(6)],
+        [random.choice(["play tennis", "dont play"]) for _ in range(6)]
+    ])
+
+
+Each dataset has 6 samples (columns) and 3 rows (features).
+
+Row 0 → Weather
+
+Row 1 → Temperature
+
+Row 2 → Target (Play Tennis / Don’t Play)
+
+Each tree gets a new random dataset to simulate randomness similar to bootstrapping.
+
+Step 2: Entropy and Probability Calculation
+
+Inside decision_tree_run(dataset):
+
+Base Entropy
+
+Calculated from the frequency of "play tennis" and "dont play".
+
+Formula:
+
+𝐻(𝑆)=−∑𝑝𝑖log2(𝑝𝑖)
+H(S)=−∑pilog2​(pi)
+
+Feature-Level Entropy
+
+For each feature (Weather and Temperature), the code computes entropy for each possible value (e.g., sunny/rainy or hot/cool).
+
+Weighted entropy is then computed using:
+
+𝐻(feature)=∑∣𝑆𝑣∣∣𝑆∣𝐻(𝑆𝑣)
+H(feature)=∑∣S∣∣Sv∣​H(Sv​)
+Information Gain
+
+Information Gain (IG) is the reduction in entropy after splitting on a feature:
+
+𝐼𝐺(feature)=𝐻(𝑆)−𝐻(feature)
+IG(feature)=H(S)−H(feature)
+
+The feature with higher IG is considered a better split.
+
+Step 3: Decision Path Simulation
+if information_gain_temprature > information_gain_weather:
+    print("path choosed of temprature")
+
+
+The code selects the feature with the higher information gain.
+
+It then checks if any subset entropy (e.g., entropy_hot or entropy_cool) is 0, meaning it has reached a pure leaf node.
+
+If entropy = 0 → a leaf node is formed (no further splitting needed).
+
+Otherwise → the algorithm notes that the input feature has been exhausted.
+
+The function returns either "play tennis" or "dont play" based on which path and leaf node are reached.
+
+Step 4: Random Forest Simulation
+trees = []
+for i in range(3):
+    dataset = generate_random_dataset()
+    decision = decision_tree_run(dataset)
+    trees.append(decision)
+
+
+Three independent decision trees are created.
+
+Each produces one decision.
+
+Then, majority voting is applied:
+
+final_output = max(set(trees), key=trees.count)
+
+
+The label with the highest frequency among tree outputs becomes the final prediction.
+
+Step 5: Example Output
+
+Example console output might look like:
+
+--- Dataset for Decision Tree 1 ---
+        0      1      2      3      4      5
+0     sunny  rainy  sunny  rainy  sunny  rainy
+1     cool   hot    cool   hot    cool   cool
+2  play tennis  dont play  play tennis  play tennis  dont play  play tennis
+
+--- Running Decision Tree 1 ---
+path choosed of weather
+leaf node achieved by sunny weather
+Tree 1 decision: play tennis
+
+--- Majority Voting ---
+All tree decisions: ['play tennis', 'dont play', 'play tennis']
+Final Random Forest Decision: play tennis

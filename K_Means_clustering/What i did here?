@@ -1,0 +1,82 @@
+Step-by-step breakdown
+1. Creating the dataset
+dataset = np.array([
+    [5.7, 4.3, 8.8, 2.5, 6.7, 3.0, 5.8],
+    [5.6, 7.4, 6.5, 3.2, 2.1, 6.4, 7.8]
+])
+
+
+You created a dataset of 7 points, each with:
+
+An x-coordinate (first row)
+
+A y-coordinate (second row)
+
+So your dataset looks like 7 points in a 2D plane.
+
+2. Randomly choosing initial centroids
+centroid_x_1 = random.choices(dataset[0])
+centroid_y_1 = random.choices(dataset[1])
+centroid_x_2 = random.choices(dataset[0])
+centroid_y_2 = random.choices(dataset[1])
+
+
+Here, you randomly picked two points from your dataset as the starting centroids:
+
+C1 → (centroid_x_1, centroid_y_1)
+
+C2 → (centroid_x_2, centroid_y_2)
+
+Then you made sure they’re not the same.
+This is your initial cluster centers.
+
+3. Separating data into x and y lists
+x_coordinates = list(map(float, dataset[0]))
+y_coordinates = list(map(float, dataset[1]))
+
+
+You extracted the x and y values from your dataset separately for easier use later.
+
+4. Calculating distances from centroids
+distance_1.append(math.sqrt(((x_coordinates[i] - centroid_x_1[0]) ** 2) + ((y_coordinates[i] - centroid_y_1[0]) ** 2)))
+distance_2.append(math.sqrt(((x_coordinates[i] - centroid_x_2[0]) ** 2) + ((y_coordinates[i] - centroid_y_2[0]) ** 2)))
+
+
+For every point in the dataset:
+
+You calculated the Euclidean distance between the point and each centroid.
+This helps determine which centroid each point is closer to.
+
+5. Assigning points to clusters
+if distance_1[i] > distance_2[i]:
+    new_data.append("C1")
+elif distance_2[i] > distance_1[i]:
+    new_data.append("C2")
+
+
+Each data point is assigned to:
+
+Cluster C1 if it’s closer to the first centroid
+
+Cluster C2 if it’s closer to the second centroid
+
+So you’re grouping data by proximity.
+
+6. Updating centroids
+
+When a point gets assigned to a cluster, you slightly shift that cluster’s centroid toward the point:
+
+centroid_x_1 = [(centroid_x_1[0] + x_coordinates[i]) / 2]
+centroid_y_1 = [(centroid_y_1[0] + y_coordinates[i]) / 2]
+
+
+This mimics the centroid update step in K-Means — moving each centroid toward the mean of the points assigned to it.
+
+So the centroids become more “representative” of their cluster with each new point.
+
+7. Adding cluster labels back into dataset
+dataset = np.vstack((dataset, new_data))
+print(dataset)
+
+
+Finally, you stacked the cluster labels (C1, C2) onto your dataset — showing which point belongs to which cluster.

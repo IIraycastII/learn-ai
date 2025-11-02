@@ -1,19 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Set seed for reproducibility
 np.random.seed(42)
 
-# Generate 100 points along a base line y = 1.5*x + 5
-x = np.linspace(10, 200, 100)  # elongated X range
+x = np.linspace(10, 200, 100)  
 
-# Increase noise to scatter the points more
-y = 1.5 * x + 5 + np.random.normal(0, 20, size=100)  # higher std dev for more scatter
+y = 1.5 * x + 5 + np.random.normal(0, 20, size=100)  
 
 points = np.column_stack((x, y))
 original_points = points.copy()
 
-# Iterative midpoint process to get final point
 points_mid = points.copy()
 while len(points_mid) > 1:
     midpoints = []
@@ -25,20 +21,16 @@ while len(points_mid) > 1:
 
 final_point = points_mid[0]
 
-# Compute slope of the final line
 slope = final_point[1] / final_point[0]
 
-# Predicted y values on the midpoint line for each original x
 y_pred = slope * original_points[:, 0]
 
-# Compute residuals and average error
 residuals = original_points[:, 1] - y_pred
 average_error = np.mean(residuals)
 
 print(f"Average Error (Actual - Predicted): {average_error:.3f}")
 print(f"Residual Range: {np.min(residuals):.3f} to {np.max(residuals):.3f}")
 
-# Plot
 plt.figure(figsize=(10,6))
 plt.scatter(original_points[:,0], original_points[:,1], color='orange', s=50, label='Original Points')
 x_line = np.linspace(0, 250, 500)
@@ -49,3 +41,4 @@ plt.ylabel("Y Values")
 plt.grid(True, linestyle='--', alpha=0.6)
 plt.legend()
 plt.show()
+

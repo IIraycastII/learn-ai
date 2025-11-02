@@ -63,11 +63,11 @@ for j in range(input_times):
             print(f"the predicted {result} and actual is {input_3} is the same")
             correct_count += 1
         elif result != input_3:
-            weight_1 = weights_1 + learning_rate * (input_3 - result) * input_1
-            weight_2 = weights_2 + learning_rate * (input_3 - result) * input_2
+            weights_1 = weights_1 + learning_rate * (input_3 - result) * input_1
+            weights_2 = weights_2 + learning_rate * (input_3 - result) * input_2
             bias = bias + learning_rate * (input_3 - result)
-            print(weight_1, weight_2, bias)
+            print(weights_1, weights_2, bias)
 
     print(f"x1={input_1:.2f}, x2={input_2:.2f}, z={z:.3f}, predicted={result}, actual={input_3}")
 
-print(f"out of {input_times} the model predicted correct {correct_count}")
+print(f"out of {input_times * 4} the model predicted correct {correct_count}")

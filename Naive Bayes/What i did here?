@@ -1,0 +1,77 @@
+What this code does
+
+It predicts whether a person will buy ice cream (yes or no) based on:
+
+Temperature (hot / cool)
+
+Weather (rainy / sunny)
+
+using Naive Bayes Theorem:
+𝑃(Class | Features)∝𝑃(Class)×𝑃(Feature1∣Class)×𝑃(Feature2∣Class)
+P(Class | Features)∝P(Class)×P(Feature1∣Class)×P(Feature2∣Class)
+
+Dataset
+Temperature	Weather	Ice_cream
+hot	rainy	yes
+cool	sunny	yes
+cool	sunny	no
+hot	sunny	yes
+cool	rainy	yes
+cool	rainy	no
+
+This is stored as a NumPy array and printed in DataFrame form.
+
+Input
+
+The user enters something like:
+
+cool sunny
+→ meaning temperature = cool, weather = sunny
+
+Computation Steps
+Extract each column
+
+The lists list_temprature, list_weather, and list_ice_cream store all the values separately.
+
+Count occurrences
+
+You count:
+
+how many yes and no
+
+how often the given temperature occurs with yes and no
+
+how often the given weather occurs with yes and no
+
+Compute probabilities
+
+P_yes = total yes / total samples
+
+P_no = total no / total samples
+
+P(temp | yes) = how many times that temperature appeared with yes / total yes
+
+P(temp | no) = how many times that temperature appeared with no / total no
+
+same for weather
+
+Apply Naive Bayes formula
+𝑃(yes | temp, weather)=𝑃(yes)×𝑃(temp | yes)×𝑃(weather | yes)
+P(yes | temp, weather)=P(yes)×P(temp | yes)×P(weather | yes)
+
+and similarly for no.
+
+Then whichever probability is higher → that’s your prediction.
+
+Example Run
+
+If you input:
+
+cool sunny
+
+
+It might output:
+
+probaility of yes ice cream is [0.0370]
+probaility of no ice cream is [0.0185]
+in a cool temprature and sunny weather, the person will buy ice cream

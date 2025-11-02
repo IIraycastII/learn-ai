@@ -1,0 +1,110 @@
+Step-by-step Understanding
+1. Dataset Setup
+dataset = np.array([
+    ["sunny", "sunny", "rainy", "sunny", "sunny", "sunny"],
+    ["cool", "cool", "cool", "hot", "cool", "hot"],
+    ["play tennis", "play tennis", "dont play", "play tennis", "dont play", "dont play"]
+])
+
+
+You made a 3-row dataset:
+
+Row 0 → Weather
+
+Row 1 → Temperature
+
+Row 2 → Target output ("play tennis" or "dont play")
+
+You then printed it as a DataFrame just to view it neatly.
+
+2. Count basic frequencies
+
+You counted how many times:
+
+Tennis was played (play_tennis_count)
+
+Tennis wasn’t played (dont_play_count)
+
+Then you found the probability of each outcome and calculated the base entropy (the total uncertainty of the output).
+
+So you now know:
+👉 “How uncertain the overall decision is before splitting by any feature.”
+
+3. Calculate entropy for ‘Weather’ feature
+
+You looped through and counted:
+
+How many sunny and rainy examples there are.
+
+Within each, how many are play and dont play.
+
+Then you calculated the entropy for sunny and entropy for rainy — i.e.,
+“How mixed or pure each weather condition’s outcomes are.”
+
+Then you took their weighted average:
+
+weighted_entropy_weather = (P(sunny)*entropy_sunny) + (P(rainy)*entropy_rainy)
+
+
+This gives the expected entropy after splitting by weather.
+
+4. Calculate entropy for ‘Temperature’ feature
+
+Same logic — you found counts for:
+
+Cool (and how many played/didn't)
+
+Hot (and how many played/didn't)
+
+Then you computed:
+
+entropy_cool
+
+entropy_hot
+
+And their weighted average weighted_entropy_temperature
+
+5. Compute Information Gain
+
+You calculated:
+
+information_gain_weather = entropy - weighted_entropy_weather
+information_gain_temperature = entropy - weighted_entropy_temperature
+
+
+This tells how much entropy (uncertainty) each feature reduces.
+The feature with higher information gain is the better one to split first.
+
+6. Choose the feature with highest gain
+
+You compared the two:
+
+if information_gain_temprature > information_gain_weather:
+    ...
+else:
+    ...
+
+
+Then printed which “path” (feature) you chose — weather or temperature.
+
+You also checked whether any entropy = 0 for a feature, meaning it reached a leaf node (perfectly classified).
+
+Example:
+
+If entropy_hot == 0, then “Hot” always leads to one decision (pure branch).
+
+If not, you said "leaf node not achieved and changing input feature", meaning you’d continue splitting (like a real decision tree would).
+
+7. Path tracking
+
+You used path_taken as a flag to note that you’ve started moving through features and prevent reusing the same one again.
+
+Step	Action	Concept
+1	Created dataset	Weather, Temperature, and Target
+2	Counted overall play/don’t play	Frequency
+3	Calculated base entropy	Uncertainty before split
+4	Calculated entropy for weather	Entropy for “sunny” & “rainy”
+5	Calculated entropy for temperature	Entropy for “cool” & “hot”
+6	Computed information gain for both	How much uncertainty is reduced
+7	Chose best feature (higher IG)	Decision Tree Root
+8	Checked for leaf nodes	Stop if data is pure
